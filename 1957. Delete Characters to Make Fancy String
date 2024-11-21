@@ -1,0 +1,38 @@
+public class Solution {
+    public String makeFancyString(String s) {
+        if (s == null || s.length() == 0) {
+            return "";
+        }
+
+        StringBuilder result = new StringBuilder();
+        int count = 1;
+
+        result.append(s.charAt(0));
+        for (int i = 1; i < s.length(); i++) {
+            if (s.charAt(i) == s.charAt(i - 1)) {
+                count++;
+            } else {
+                count = 1;
+            }
+
+            if (count < 3) {
+                result.append(s.charAt(i));
+            }
+        }
+
+        return result.toString();
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+
+        String s1 = "leeetcode";
+        System.out.println(sol.makeFancyString(s1)); // Output: "leetcode"
+
+        String s2 = "aaabaaaa";
+        System.out.println(sol.makeFancyString(s2)); // Output: "aabaa"
+
+        String s3 = "aab";
+        System.out.println(sol.makeFancyString(s3)); // Output: "aab"
+    }
+}
