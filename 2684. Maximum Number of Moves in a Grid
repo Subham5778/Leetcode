@@ -1,0 +1,30 @@
+class Solution {
+    public int maxMoves(int[][] grid) {
+        int ans=0;
+        int dp[][] = new int[grid.length][grid[0].length];
+        for(int j =0; j < grid.length;j++){
+            ans = Math.max(ans, solve(grid,j,0,dp));
+        }
+        return ans;
+
+
+        
+    }
+    public int solve(int grid[][], int row, int col, int dp[][]){
+        if(dp[row][col] !=0){
+            return dp[row][col];
+        }
+        int pos1=0,pos2=0,pos3=0;
+        if(row -1 >= 0 && col + 1 < grid[0].length && grid[row][col] < grid[row-1][col + 1]){
+            pos1 = 1+ solve(grid, row-1, col+1,dp);
+        }
+
+          if(col + 1  < grid[0].length && grid[row][col] < grid[row][col + 1]){
+            pos2 = 1+ solve(grid, row, col+1,dp);
+        }
+          if(row + 1  < grid.length && col + 1 < grid[0].length && grid[row][col] < grid[row+1][col+1]){
+            pos3 = 1+ solve(grid, row+1, col+1,dp);
+        }
+         return dp[row][col] = Math.max(pos1,Math.max(pos2,pos3));       
+    }
+}
