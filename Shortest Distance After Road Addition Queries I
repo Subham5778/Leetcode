@@ -1,0 +1,39 @@
+class Solution {
+    public int[] shortestDistanceAfterQueries(int n, int[][] queries) {
+        final int INF = Integer.MAX_VALUE;
+        int[] distances = new int [queries.length];
+        Map<Integer, List<int[]>> graph = new HashMap<>();
+        for(int i =0;i<n;i++){
+            graph.put(i,new ArrayList<>());
+        }
+        for(int i=0;i<n-1;i++){
+            graph.get(i).add(new int[]{i+1,1});
+        }
+        for(int i=0;i<queries.length;i++){
+            int[] query = queries[i];
+            int u = query[0], v=query[1];
+            graph.get(u).add(new int[]{v,1});
+            PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
+            pq.add(new int[]{0,0});
+            int[] minDistance = new int[n];
+            Arrays.fill(minDistance,INF);
+            minDistance[0] =0;
+            while(!pq.isEmpty()){
+                int[] node = pq.poll();
+                int uNode = node[0];
+                int uDist = node[1];
+                
+                for(int[] neighbor : graph.get(uNode)){
+                    int vNode =neighbor[0];
+                    int weight = neighbor[1];
+                    if(minDistance[uNode] + weight <minDistance[vNode]){
+                    minDistance[vNode] = minDistance[uNode] + weight;
+                    pq.add(new int[]{vNode,minDistance[vNode]});
+                }
+            }
+        }
+        distances[i] = minDistance[n-1];
+        }
+        return distances;
+    }
+}
