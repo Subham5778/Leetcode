@@ -1,0 +1,18 @@
+class Solution {
+    public int isPrefixOfWord(String sentence, String searchWord) {
+           String[] words = sentence.split(" ");
+
+        //Iterate through the words to find the prefix
+        for(int i = 0; i < words.length; i++) {
+            if(words[i].startsWith(searchWord))
+                //return 1 based indexed position
+                return i + 1;
+        }
+
+            //If no prefix match is found, return -1
+            return -1;
+        
+        
+        
+    }
+}
