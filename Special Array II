@@ -1,0 +1,27 @@
+class Solution {
+    public boolean[] isArraySpecial(int[] nums, int[][] queries) {
+        int count = 0;
+        
+        boolean even = nums[0]%2==0;
+        for(int i=0; i<nums.length; i++) {
+           
+            if((nums[i]%2==0)==even) {
+                count+=1;
+                even=!even;
+            
+            } else {
+                count=1;
+                even = !(nums[i]%2==0);
+            }
+            nums[i] = count;
+        }
+        boolean ans[] = new boolean[queries.length];
+        for(int i=0; i<ans.length; i++) {
+            
+            int len = queries[i][1]-queries[i][0]+1;
+           
+            ans[i] = len<=nums[queries[i][1]];
+        }
+        return ans;
+    }
+}
