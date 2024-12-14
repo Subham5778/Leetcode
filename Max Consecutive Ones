@@ -12,6 +12,7 @@ class Solution {
             }
         }
 
+
         // Final check in case the array ends with a sequence of 1's
         maxCount = Math.max(maxCount, currentCount);
 
