@@ -1,0 +1,48 @@
+class Solution {
+
+    //Helper method to check if a string is special
+    public boolean isSpecial(String str) {
+        char firstChar = str.charAt(0);
+        for(char c : str.toCharArray()) {
+            if(c != firstChar)
+                return false;
+        }
+        return true;
+    }
+
+    public int maximumLength(String s) {
+
+        //Frequency map to store the counts of special substrings
+        Map<String, Integer> substringCount = new HashMap<>();
+
+        int n = s.length();
+
+        //Generate all special substrings and count their occurrences
+        for(int i = 0; i < n; i++) {
+            StringBuilder currentSubstring = new StringBuilder();
+            for(int j = i; j < n; j++) {
+                //Add the current charater to the substring;
+                currentSubstring.append(s.charAt(j));
+
+                //Check if the substring is special(all characters are the same)
+                if(isSpecial(currentSubstring.toString())) {
+                    substringCount.put(currentSubstring.toString(), substringCount.getOrDefault(currentSubstring.toString(), 0) + 1);
+                }
+                else
+                    //If the substring is no longer special, break the loop
+                    break;
+            }
+        }
+
+        //Find the longest substring that appears at least 3 times
+        int maxLength = -1;
+        for(Map.Entry<String, Integer> entry : substringCount.entrySet()) {
+            String substring = entry.getKey();
+            int count = entry.getValue();
+
+            if(count >= 3)
+                maxLength = Math.max(maxLength, substring.length());
+        }
+        return maxLength;
+    }
+}
