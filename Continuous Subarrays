@@ -1,0 +1,38 @@
+import java.util.TreeMap;
+
+class Solution {
+    public long continuousSubarrays(int[] nums) {
+        int n = nums.length;
+        long count = 0;
+        int left = 0;
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+
+        for (int right = 0; right < n; right++) {
+            // Add the current element to the map
+            map.put(nums[right], map.getOrDefault(nums[right], 0) + 1);
+
+            // Shrink the subarray from the left if the condition is violated
+            while (map.lastKey() - map.firstKey() > 2) {
+                map.put(nums[left], map.get(nums[left]) - 1);
+                if (map.get(nums[left]) == 0) {
+                    map.remove(nums[left]);
+                }
+                left++;
+            }
+
+            // Count the number of valid subarrays ending at 'right'
+            count += right - left + 1;
+        }
+
+        return count;
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        int[] nums1 = {5, 4, 2, 4};
+        System.out.println(solution.continuousSubarrays(nums1)); // Output: 8
+
+        int[] nums2 = {1, 2, 3};
+        System.out.println(solution.continuousSubarrays(nums2)); // Output: 6
+    }
+}
