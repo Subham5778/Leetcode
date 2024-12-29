@@ -1,0 +1,38 @@
+class Solution {
+    public int findTargetSumWays(int[] nums, int target) {
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        if (sum < Math.abs(target) || (sum + target) % 2 != 0) {
+            return 0;
+        }
+        int s = (sum + target) / 2;
+        return countSubsets(nums, s);
+    }
+
+    private int countSubsets(int[] nums, int s) {
+        int[] dp = new int[s + 1];
+        dp[0] = 1;
+        for (int num : nums) {
+            for (int j = s; j >= num; j--) {
+                dp[j] += dp[j - num];
+            }
+        }
+        return dp[s];
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        int[] nums1 = {1, 1, 1, 1, 1};
+        int target1 = 3;
+        System.out.println(solution.findTargetSumWays(nums1, target1)); // Output: 5
+
+        int[] nums2 = {1};
+        int target2 = 1;
+        System.out.println(solution.findTargetSumWays(nums2, target2)); // Output: 1
+    }
+}
