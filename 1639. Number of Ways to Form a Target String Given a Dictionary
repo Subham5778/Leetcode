@@ -1,0 +1,30 @@
+import java.util.*;
+
+class Solution {
+    public int numWays(String[] words, String target) {
+        int MOD = 1_000_000_007;
+        int m = words.length, n = words[0].length(), t = target.length();
+        long[][] dp = new long[t + 1][n + 1];
+        int[][] count = new int[n][26];
+
+        for (String word : words) {
+            for (int i = 0; i < n; i++) {
+                count[i][word.charAt(i) - 'a']++;
+            }
+        }
+
+        dp[0][0] = 1;
+        for (int i = 0; i <= t; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i < t) {
+                    dp[i + 1][j + 1] = (dp[i + 1][j + 1] + dp[i][j] * count[j][target.charAt(i) - 'a']) % MOD;
+                }
+                dp[i][j + 1] = (dp[i][j + 1] + dp[i][j]) % MOD;
+            }
+        }
+
+        return (int) dp[t][n];
+    }
+}
+
+
