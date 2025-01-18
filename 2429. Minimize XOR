@@ -1,0 +1,46 @@
+class Solution {
+    public int minimizeXor(int num1, int num2) {
+
+    
+        
+        int setBitsNum2 = Integer.bitCount(num2);
+        
+        int x = num1;
+        
+      
+        int setBitsNum1 = Integer.bitCount(num1);
+        
+      
+        if (setBitsNum1 > setBitsNum2) {
+            for (int i = 0; i < 32; i++) {
+                if (setBitsNum1 == setBitsNum2) {
+                    break;
+                }
+                if ((x & (1 << i)) != 0) {
+                    x ^= (1 << i);
+                    setBitsNum1--;
+                }
+            }
+        }
+      
+        else if (setBitsNum1 < setBitsNum2) {
+            for (int i = 0; i < 32; i++) {
+                if (setBitsNum1 == setBitsNum2) {
+                    break;
+                }
+                if ((x & (1 << i)) == 0) {
+                    x |= (1 << i);
+                    setBitsNum1++;
+                }
+            }
+        }
+        
+        return x;
+    }
+}
+
+
+
+
+
+  
